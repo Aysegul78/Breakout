@@ -5,7 +5,7 @@ local physics = require "physics"physics.start()physics.setGravity(0, 0)
 system.setAccelerometerInterval( 100 )
 
 local menuScreenGroup	local mmScreenlocal playBtn
-
+local instructionsScreenGrouplocal insScreenlocal nextBtn
 local backgroundlocal paddlelocal bricklocal ball
 
 local scoreTextlocal scoreNumlocal levelTextlocal levelNum
@@ -21,11 +21,11 @@ function main()	mainMenu()end
 
 function mainMenu()		menuScreenGroup = display.newGroup()	mmScreen = display.newImage("mmScreen.png", 0, 0, true)	mmScreen.x = _W	mmScreen.y = _H		playBtn = display.newImage("playbtn.png")	playBtn:setReferencePoint(display.CenterReferencePoint)	playBtn.x = _W; playBtn.y = _H + 50	playBtn.name = "playbutton"	menuScreenGroup:insert(mmScreen)	menuScreenGroup:insert(playBtn)
 	
-	playBtn:addEventListener("tap", loadGame)
+	playBtn:addEventListener("tap", loadInstructions)
 end
-
-
-function loadGame(event)	if event.target.name == "playbutton" then						transition.to(menuScreenGroup,{time = 0, alpha=0, onComplete = addGameScreen})				playBtn:removeEventListener("tap", loadGame)	endend
+function loadInstructions(event)	if event.target.name == "playbutton" then						transition.to(menuScreenGroup,{time = 0, alpha=0, onComplete = addInstScreen})				playBtn:removeEventListener("tap", loadInstructions)	endend
+function addInstScreen()	instructionsScreenGroup = display.newGroup()	insScreen = display.newImage("insScreen.png", 0, 0, true)	insScreen.x = _W	insScreen.y = _H		nextBtn = display.newImage("nextbtn.png")	nextBtn:setReferencePoint(display.CenterReferencePoint)	nextBtn.x = _W; nextBtn.y = _H + 50	nextBtn.name = "nextbutton"	instructionsScreenGroup:insert(insScreen)	instructionsScreenGroup:insert(nextBtn)		nextBtn:addEventListener("tap", loadGame)end
+function loadGame(event)	if event.target.name == "nextbutton" then						transition.to(instructionsScreenGroup,{time = 0, alpha=0, onComplete = addGameScreen})				nextBtn:removeEventListener("tap", loadGame)	endend
 
 function addGameScreen()	background = display.newImage("bg.png", 0, 0, true )	background.x = _W 	background.y = _H		paddle = display.newImage("paddle.png")	paddle.x = 240; paddle.y = 300	paddle.name = "paddle"		ball = display.newImage("ball.png")	ball.x = 240; ball.y = 290	ball.name = "ball"
 	
